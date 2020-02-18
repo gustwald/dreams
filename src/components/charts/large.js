@@ -1,7 +1,7 @@
 
 import React from "react"
 
-import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis } from "recharts"
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts"
 
 const TinyLineChart = ({ data, filter }) => {
 
@@ -28,7 +28,8 @@ return (
   <ResponsiveContainer>
     <AreaChart data={chartdata} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
       <Area type="monotone" dataKey="balance" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="pending" stroke="pink" fill="pink" />
+      {/* <Area type="monotone" dataKey="pending" stroke="pink" fill="pink" /> */}
+      {/* <ReferenceLine y={9800} label="Max" stroke="blue" /> */}
       <Tooltip />
     </AreaChart>
   </ResponsiveContainer>

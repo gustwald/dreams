@@ -38,7 +38,7 @@ export default ({ pageContext: { value }, ...props }) => {
       <Filter>
         filter on
         <div className="filterItems">
-            <a style={{ textDecoration: quickDataFilter === 'pending' ? 'line-through' : 'none' }} onClick={() => setQuickDataFilter(quickDataFilter === "pending" ? 'settled' : 'pending')}>settled</a>
+            <a style={{ textDecoration: quickDataFilter === 'pending' ? 'line-through' : 'none' }} onClick={() => setQuickDataFilter(quickDataFilter === "pending" ? 'settled' : 'pending')}>total</a>
             <a style={{ textDecoration: quickDataFilter === 'settled' ? 'line-through' : 'none'}} onClick={() => setQuickDataFilter(quickDataFilter === "pending" ? 'settled' : 'pending')}>pending</a>
         </div>
       </Filter>
