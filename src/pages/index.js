@@ -16,9 +16,9 @@ const IndexPage = ({ data }) => {
       {Object.keys(groupedDreams).map((dream, i) => (
         <Link
           key={i}
-          state={{ dreamName: `Dream #${i + 1}` }}
+          state={{ dreamName: `dream #${i + 1}` }}
           to={`/dream/${dream}`}
-        >{`Dream #${i + 1}`}</Link>
+        >{`dream #${i + 1}`}</Link>
       ))}
     </Layout>
   )

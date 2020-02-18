@@ -1,3 +1,5 @@
+const moment = require('moment');
+moment.locale('sv');
 const groupBy = key => array =>
   array.reduce((objectsByKeyValue, obj) => {
     const value = obj.transaction[key];
@@ -18,9 +20,13 @@ const dateConverter = (timestamp) => {
     return time;
 }
 
+const groupByWeek = (dates) => {
+}
+
 module.exports = {
     groupBy,
     sum,
     average,
     dateConverter,
+    groupByWeek,
 }

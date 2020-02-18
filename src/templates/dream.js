@@ -1,13 +1,12 @@
 import React, { useState } from "react"
 import { Link } from "gatsby"
-
-import { sum, average } from "../utils"
+import { sum, average, groupByWeek } from "../utils"
 import { DreamWrapper, BackButton, Filter } from "../style"
 import TinyLineChart from "../components/charts/large"
 import Arrow from "../assets/arrow.svg"
 
 export default ({ pageContext: { value }, ...props }) => {
-  console.log(props)
+//   console.log(props)
   const { location } = props || {}
   const { state } = location || {}
   const { dreamName } = state || {}
@@ -15,17 +14,20 @@ export default ({ pageContext: { value }, ...props }) => {
 
   const balance = sum(
     value
-      .filter(d => d.transaction.state === quickDataFilter)
+    //   .filter(d => d.transaction.state === quickDataFilter)
       .map(v => v.transaction.amount)
   )
   const averageTransaction = average(
     value
-      .filter(d => d.transaction.state === quickDataFilter)
+    //   .filter(d => d.transaction.state === quickDataFilter)
       .map(v => v.transaction.amount)
   )
-  const transactionsAmount = value.filter(
-    v => v.transaction.state === quickDataFilter
-  )
+  console.log(value);
+//   const transactionsAmount = value.filter(
+//     v => v.transaction.state === quickDataFilter
+//   )
+
+// const lepra = groupByWeek(value);
   return (
     <>
       <BackButton>
@@ -55,7 +57,7 @@ export default ({ pageContext: { value }, ...props }) => {
             </div>
             <div className="quick-data--child">
               <h2 className="title">
-                {transactionsAmount && transactionsAmount.length}
+                {value && value.length}
               </h2>
               <p className="explain">transactions</p>
             </div>
@@ -67,7 +69,7 @@ export default ({ pageContext: { value }, ...props }) => {
             </div>
           </div>
           <div className="chart-data">
-            <TinyLineChart />
+            <TinyLineChart filter={quickDataFilter} data={value} />
           </div>
         </div>
       </DreamWrapper>
