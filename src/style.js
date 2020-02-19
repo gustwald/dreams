@@ -3,6 +3,18 @@ import styled from "styled-components"
 export const LayoutWrapper = styled.div`
   margin: 20px 30px;
 `
+export const HomePageWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 60px;
+    justify-content: center;
+    align-items: center;
+    a {
+        font-size: 56px;
+        text-decoration: none;
+        padding: 0 20px;
+    }
+`;
 
 export const BackButton = styled.div`
   position: absolute;
@@ -13,6 +25,10 @@ export const BackButton = styled.div`
       width: 40px;
     }
   }
+  @media screen and (max-width: 420px) {
+  top: 8px;
+  left: 8px;
+    }
 `
 export const Filter = styled.div`
   font-size: 28px;
@@ -29,7 +45,15 @@ export const Filter = styled.div`
       a {
           cursor: pointer;
       }
+      @media screen and (max-width: 420px) {
+        font-size: 16px;
+}
   }
+  @media screen and (max-width: 420px) {
+  font-size: 20px;
+  top: 8px;
+  right: 8px;
+}
 `
 export const DreamWrapper = styled.div`
   height: 100%;
@@ -61,6 +85,9 @@ export const DreamWrapper = styled.div`
         .explain {
           font-size: 14px;
         }
+        @media screen and (max-width: 420px) {
+        padding: 10px;
+}
       }
     }
     .chart-data {

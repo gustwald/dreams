@@ -2,6 +2,7 @@ import React from "react"
 import { Link, StaticQuery, graphql } from "gatsby"
 import { groupBy } from "../utils"
 import Layout from "../components/layout"
+import { HomePageWrapper } from '../style';
 
 const IndexPage = ({ data }) => {
   const { allDreamsApi } = data || {}
@@ -13,6 +14,7 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
+      <HomePageWrapper>
       {Object.keys(groupedDreams).map((dream, i) => (
         <Link
           key={i}
@@ -20,6 +22,7 @@ const IndexPage = ({ data }) => {
           to={`/dream/${dream}`}
         >{`dream #${i + 1}`}</Link>
       ))}
+      </HomePageWrapper>
     </Layout>
   )
 }

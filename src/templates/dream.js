@@ -1,33 +1,46 @@
 import React, { useState } from "react"
 import { Link } from "gatsby"
-import { sum, average, groupByWeek } from "../utils"
+import { sum, average } from "../utils"
 import { DreamWrapper, BackButton, Filter } from "../style"
 import TinyLineChart from "../components/charts/large"
 import Arrow from "../assets/arrow.svg"
 
 export default ({ pageContext: { value }, ...props }) => {
-//   console.log(props)
   const { location } = props || {}
   const { state } = location || {}
   const { dreamName } = state || {}
-  const [quickDataFilter, setQuickDataFilter] = useState("settled")
+  const [quickDataFilter, setQuickDataFilter] = useState("total")
 
   const balance = sum(
     value
-    //   .filter(d => d.transaction.state === quickDataFilter)
+      .filter(d => {
+        if (quickDataFilter === "total") {
+          return d.transaction.state === "settled" || "pending"
+        } else {
+          return d.transaction.state === "pending"
+        }
+      })
       .map(v => v.transaction.amount)
   )
   const averageTransaction = average(
     value
-    //   .filter(d => d.transaction.state === quickDataFilter)
+      .filter(d => {
+        if (quickDataFilter === "total") {
+          return d.transaction.state === "settled" || "pending"
+        } else {
+          return d.transaction.state === "pending"
+        }
+      })
       .map(v => v.transaction.amount)
   )
-  console.log(value);
-//   const transactionsAmount = value.filter(
-//     v => v.transaction.state === quickDataFilter
-//   )
+  const transactionsAmount = value.filter(d => {
+    if (quickDataFilter === "total") {
+      return d.transaction.state === "settled" || "pending"
+    } else {
+      return d.transaction.state === "pending"
+    }
+  })
 
-// const lepra = groupByWeek(value);
   return (
     <>
       <BackButton>
@@ -38,26 +51,52 @@ export default ({ pageContext: { value }, ...props }) => {
       <Filter>
         filter on
         <div className="filterItems">
-            <a style={{ textDecoration: quickDataFilter === 'pending' ? 'line-through' : 'none' }} onClick={() => setQuickDataFilter(quickDataFilter === "pending" ? 'settled' : 'pending')}>total</a>
-            <a style={{ textDecoration: quickDataFilter === 'settled' ? 'line-through' : 'none'}} onClick={() => setQuickDataFilter(quickDataFilter === "pending" ? 'settled' : 'pending')}>pending</a>
+          <a
+            style={{
+              textDecoration:
+                quickDataFilter === "pending" ? "line-through" : "none",
+            }}
+            onClick={() =>
+              setQuickDataFilter(
+                quickDataFilter === "pending" ? "total" : "pending"
+              )
+            }
+          >
+            total
+          </a>
+          <a
+            style={{
+              textDecoration:
+                quickDataFilter === "total" ? "line-through" : "none",
+            }}
+            onClick={() =>
+              setQuickDataFilter(
+                quickDataFilter === "pending" ? "total" : "pending"
+              )
+            }
+          >
+            pending
+          </a>
         </div>
       </Filter>
       <DreamWrapper>
-        {/* <div className="sidebar">
-                <h1 className="title">{dreamName}</h1>
-            </div> */}
         <div className="data">
           <div className="name-data">
             <h1 className="title">{dreamName}</h1>
           </div>
-          <div className="quick-data">
+          <div
+            style={{
+              color: quickDataFilter === "total" ? "#8884d8" : "#cd2222",
+            }}
+            className="quick-data"
+          >
             <div className="quick-data--child">
               <h2 className="title">{balance && balance}</h2>
-              <p className="explain">total dream balance</p>
+              <p className="explain">dream balance</p>
             </div>
             <div className="quick-data--child">
               <h2 className="title">
-                {value && value.length}
+                {transactionsAmount && transactionsAmount.length}
               </h2>
               <p className="explain">transactions</p>
             </div>
