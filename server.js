@@ -8,6 +8,6 @@ app.get('/api/dreams', (req, res) => {
   });
 
 app.listen(port, () => {
-  console.log(`Listening to requests on http://localhost:${port}`);
+  console.log(`Server listening to requests on http://localhost:${port}`);
 });
 
