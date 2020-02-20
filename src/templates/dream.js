@@ -49,7 +49,7 @@ export default ({ pageContext: { value }, ...props }) => {
           <div className="name-data">
             <h1 className="title">{dreamName}</h1>
           </div>
-          <div style={{ color: quickDataFilter === 'total' ? '#372ede' : quickDataFilter === 'pending' ? '#f90c0c' : 'green' }} className="quick-data">
+          <div style={{ color: quickDataFilter === 'total' ? 'black' : quickDataFilter === 'pending' ? '#f90c0c' : 'green' }} className="quick-data">
             <div className="quick-data--child">
               <h2 className="title">{balance && balance}</h2>
               <p className="explain">dream balance</p>
