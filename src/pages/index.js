@@ -10,7 +10,6 @@ const IndexPage = ({ data }) => {
   const dreams = nodes && nodes[0].data
   const groupById = groupBy("dreamId")
   const groupedDreams = dreams && groupById(dreams)
-  console.log(groupedDreams)
 
   return (
     <Layout>

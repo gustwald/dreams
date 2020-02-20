@@ -5,6 +5,8 @@ import { AreaChart, Area, Tooltip, ResponsiveContainer } from "recharts"
 const TinyLineChart = ({ data }) => {
   let balance = 0
   let pending = 0
+  let settled = 0
+  let created = 0;
 
   let chartdata = data
     .map(d => d.transaction)
@@ -18,12 +20,19 @@ const TinyLineChart = ({ data }) => {
   for (let i = 0; i < chartdata.length; i++) {
     balance += chartdata[i].amount
     chartdata[i].balance = balance
-    if (chartdata[i].state === "settled") {
-      pending += chartdata[i].amount
-    }
-    chartdata[i].pending = pending
+    if (chartdata[i].state === "pending") {
+        pending += chartdata[i].amount
+      }
+      if (chartdata[i].state === "settled") {
+        settled += chartdata[i].amount
+      }
+      if (chartdata[i].state === "created") {
+        created += chartdata[i].amount
+      }
+      chartdata[i].pending = pending
+      chartdata[i].settled = settled
+      chartdata[i].created = created
   }
-  // console.log(chartdata)
   return (
     <ResponsiveContainer>
       <AreaChart
@@ -32,11 +41,14 @@ const TinyLineChart = ({ data }) => {
       >
         <Area
           type="monotone"
-          dataKey="balance"
-          stroke="#8884d8"
-          fill="#8884d8"
+          dataKey="settled"
+          stroke="#372ede"
+          fill="#372ede"
+          stackId="1"
         />
-        <Area type="monotone" dataKey="pending" stroke="#cd2222" fill="#cd2222" />
+        <Area type="monotone" stackId="1" dataKey="pending" stroke="#f90c0c" fill="#f90c0c" />
+        <Area type="monotone" stackId="1" dataKey="created" stroke="green" fill="green" />
+
         <Tooltip />
       </AreaChart>
     </ResponsiveContainer>

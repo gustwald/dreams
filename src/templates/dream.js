@@ -12,34 +12,22 @@ export default ({ pageContext: { value }, ...props }) => {
   const [quickDataFilter, setQuickDataFilter] = useState("total")
 
   const balance = sum(
-    value
-      .filter(d => {
-        if (quickDataFilter === "total") {
-          return d.transaction.state === "settled" || "pending"
-        } else {
-          return d.transaction.state === "pending"
-        }
-      })
-      .map(v => v.transaction.amount)
+    (quickDataFilter === "total"
+      ? value
+      : value.filter(d => d.transaction.state === quickDataFilter)
+    ).map(val => val.transaction.amount)
   )
   const averageTransaction = average(
-    value
-      .filter(d => {
-        if (quickDataFilter === "total") {
-          return d.transaction.state === "settled" || "pending"
-        } else {
-          return d.transaction.state === "pending"
-        }
-      })
-      .map(v => v.transaction.amount)
+    (quickDataFilter === "total"
+      ? value
+      : value.filter(d => d.transaction.state === quickDataFilter)
+    ).map(val => val.transaction.amount)
   )
-  const transactionsAmount = value.filter(d => {
-    if (quickDataFilter === "total") {
-      return d.transaction.state === "settled" || "pending"
-    } else {
-      return d.transaction.state === "pending"
-    }
-  })
+
+  const transactionsAmount =
+    quickDataFilter === "total"
+      ? value
+      : value.filter(d => d.transaction.state === quickDataFilter)
 
   return (
     <>
@@ -51,32 +39,9 @@ export default ({ pageContext: { value }, ...props }) => {
       <Filter>
         filter on
         <div className="filterItems">
-          <a
-            style={{
-              textDecoration:
-                quickDataFilter === "pending" ? "line-through" : "none",
-            }}
-            onClick={() =>
-              setQuickDataFilter(
-                quickDataFilter === "pending" ? "total" : "pending"
-              )
-            }
-          >
-            total
-          </a>
-          <a
-            style={{
-              textDecoration:
-                quickDataFilter === "total" ? "line-through" : "none",
-            }}
-            onClick={() =>
-              setQuickDataFilter(
-                quickDataFilter === "pending" ? "total" : "pending"
-              )
-            }
-          >
-            pending
-          </a>
+          <a style={{ textDecoration: quickDataFilter === 'total' ? '' : 'line-through'}} onClick={() => setQuickDataFilter("total")}>total</a>
+          <a style={{ textDecoration: quickDataFilter === 'pending' ? '' : 'line-through'}} onClick={() => setQuickDataFilter("pending")}>pending</a>
+          <a style={{ textDecoration: quickDataFilter === 'created' ? '' : 'line-through'}} onClick={() => setQuickDataFilter("created")}>created</a>
         </div>
       </Filter>
       <DreamWrapper>
@@ -84,12 +49,7 @@ export default ({ pageContext: { value }, ...props }) => {
           <div className="name-data">
             <h1 className="title">{dreamName}</h1>
           </div>
-          <div
-            style={{
-              color: quickDataFilter === "total" ? "#8884d8" : "#cd2222",
-            }}
-            className="quick-data"
-          >
+          <div style={{ color: quickDataFilter === 'total' ? '#372ede' : quickDataFilter === 'pending' ? '#f90c0c' : 'green' }} className="quick-data">
             <div className="quick-data--child">
               <h2 className="title">{balance && balance}</h2>
               <p className="explain">dream balance</p>
